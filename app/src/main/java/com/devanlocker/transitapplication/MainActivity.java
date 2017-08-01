@@ -5,12 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.JsonReader;
 
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
@@ -30,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLayoutManager);
         try {
             ArrayList<Route> routes = LAMetroParser.getRoutes();
-            mAdapter = new MyAdapter(routes, this);
+            mAdapter = new RouteAdapter(routes, this);
             mRecyclerView.setAdapter(mAdapter);
 
         } catch (InterruptedException e) {
