@@ -4,20 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.devanlocker.transitapplication.IndividualRouteActivity"
-    android:background="@color/background">
+    tools:context="com.devanlocker.transitapplication.ArrivalsActivity"
+    android:background="@color/background"
+    >
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/stops_recycler_view"
+        android:id="@+id/arrivals_recycler_view"
         android:layout_width="368dp"
-        android:layout_height="495dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         android:background="@color/background"/>
 </android.support.constraint.ConstraintLayout>

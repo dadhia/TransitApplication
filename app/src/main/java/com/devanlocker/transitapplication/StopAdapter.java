@@ -37,6 +37,7 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.stop_card_layout,
                 parent, false);
+        v.setOnClickListener(new StopClickListener(mIndividualRouteActivity));
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }

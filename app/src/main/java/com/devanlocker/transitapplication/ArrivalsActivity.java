@@ -5,35 +5,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class IndividualRouteActivity extends AppCompatActivity {
+public class ArrivalsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
-    private StopAdapter mAdapter;
+    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    public static final String STOP_NUMBER_MESSAGE = "com.devanlocker.transitapplication.stopNumber";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_individual_route);
+        setContentView(R.layout.activity_arrivals);
 
         Intent intent = getIntent();
-        int routeNumber = new Integer(intent.getStringExtra(MainActivity.ROUTE_NUMBER_MESSAGE));
-
-        mRecyclerView = (RecyclerView) findViewById(R.id.stops_recycler_view);
+        int routeNumber =
+                new Integer(intent.getStringExtra(IndividualRouteActivity.STOP_NUMBER_MESSAGE));
+        mRecyclerView = (RecyclerView) findViewById(R.id.arrivals_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         try {
-            ArrayList<Stop> stops = LAMetroParser.getStops(routeNumber);
-            StopAdapter mAdapter = new StopAdapter(stops, this);
+            ArrayList<Arrival> arrivals = LAMetroParser.getArrivals(routeNumber);
+            mAdapter = new ArrivalAdapter(arrivals);
             mRecyclerView.setAdapter(mAdapter);
-
         } catch (InterruptedException e) {
             //TODO
             //Some sort of error message here
@@ -44,11 +41,5 @@ public class IndividualRouteActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-    }
-
-    public void switchToStopArrivals(String number) {
-        Intent intent = new Intent(this, ArrivalsActivity.class);
-        intent.putExtra(STOP_NUMBER_MESSAGE, number);
-        startActivity(intent);
     }
 }

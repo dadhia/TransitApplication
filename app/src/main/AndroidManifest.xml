@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".IndividualRouteActivity"></activity>
+        <activity android:name=".IndividualRouteActivity" />
+        <activity android:name=".ArrivalsActivity"></activity>
     </application>
 
 </manifest>
