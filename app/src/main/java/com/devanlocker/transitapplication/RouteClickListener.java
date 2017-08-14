@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 public class RouteClickListener implements View.OnClickListener {
     private TextView mRouteNumberTextView;
-    private MainActivity mMainActivity;
+    private RoutesActivity mRoutesActivity;
 
-    public RouteClickListener(MainActivity mainActivity) {
-        mMainActivity = mainActivity;
+    public RouteClickListener(RoutesActivity routesActivity) {
+        mRoutesActivity = routesActivity;
     }
 
     @Override
     public void onClick(View v) {
         TextView routeNumber = (TextView)v.findViewById(R.id.textViewRouteNumber);
         String number = routeNumber.getText().toString();
-        mMainActivity.switchToIndividualRoute(number);
+        mRoutesActivity.switchToIndividualRoute(number);
     }
 }

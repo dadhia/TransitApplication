@@ -8,15 +8,15 @@ import android.widget.TextView;
  */
 
 public class StopClickListener implements View.OnClickListener {
-    private IndividualRouteActivity mIndividualRouteActivity;
+    private StopsActivity mStopsActivity;
 
-    public StopClickListener(IndividualRouteActivity individualRouteActivity) {
-        mIndividualRouteActivity = individualRouteActivity;
+    public StopClickListener(StopsActivity stopsActivity) {
+        mStopsActivity = stopsActivity;
     }
 
     @Override
     public void onClick(View v) {
         TextView stopNumber = (TextView)v.findViewById(R.id.textViewStopNumber);
-        mIndividualRouteActivity.switchToStopArrivals(stopNumber.getText().toString());
+        mStopsActivity.switchToStopArrivals(stopNumber.getText().toString());
     }
 }

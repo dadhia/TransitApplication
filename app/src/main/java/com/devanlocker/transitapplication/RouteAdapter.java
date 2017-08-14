@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
     private ArrayList<Route> mDataSet;
-    private MainActivity mMainActivity;
+    private RoutesActivity mRoutesActivity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewRouteNumber;
@@ -31,9 +31,9 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
     }
 
     //Suitable constructor depending on dataset
-    public RouteAdapter(ArrayList<Route> myDataSet, MainActivity mainActivity) {
+    public RouteAdapter(ArrayList<Route> myDataSet, RoutesActivity routesActivity) {
         mDataSet = myDataSet;
-        mMainActivity = mainActivity;
+        mRoutesActivity = routesActivity;
     }
 
     //Create new views
@@ -43,7 +43,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.ViewHolder>{
         //create a new view
         View view = LayoutInflater.from(parent.getContext()).
                 inflate(R.layout.route_card_layout, parent, false);
-        view.setOnClickListener(new RouteClickListener(mMainActivity));
+        view.setOnClickListener(new RouteClickListener(mRoutesActivity));
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }

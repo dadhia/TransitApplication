@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
+public class RoutesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void switchToIndividualRoute(String number) {
-        Intent intent = new Intent(this, IndividualRouteActivity.class);
+        Intent intent = new Intent(this, StopsActivity.class);
         intent.putExtra(ROUTE_NUMBER_MESSAGE, number);
         startActivity(intent);
     }

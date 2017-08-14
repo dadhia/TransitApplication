@@ -5,12 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class IndividualRouteActivity extends AppCompatActivity {
+public class StopsActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private StopAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -22,7 +21,7 @@ public class IndividualRouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_individual_route);
 
         Intent intent = getIntent();
-        int routeNumber = new Integer(intent.getStringExtra(MainActivity.ROUTE_NUMBER_MESSAGE));
+        int routeNumber = new Integer(intent.getStringExtra(RoutesActivity.ROUTE_NUMBER_MESSAGE));
 
         mRecyclerView = (RecyclerView) findViewById(R.id.stops_recycler_view);
         mRecyclerView.setHasFixedSize(true);

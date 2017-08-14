@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     private ArrayList<Stop> mDataSet;
-    private IndividualRouteActivity mIndividualRouteActivity;
+    private StopsActivity mStopsActivity;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView stopNumberTextView;
@@ -27,9 +27,9 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
         }
     }
 
-    public StopAdapter(ArrayList<Stop> stops, IndividualRouteActivity individualRouteActivity) {
+    public StopAdapter(ArrayList<Stop> stops, StopsActivity stopsActivity) {
         mDataSet = stops;
-        mIndividualRouteActivity = individualRouteActivity;
+        mStopsActivity = stopsActivity;
     }
 
 
@@ -37,7 +37,7 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.stop_card_layout,
                 parent, false);
-        v.setOnClickListener(new StopClickListener(mIndividualRouteActivity));
+        v.setOnClickListener(new StopClickListener(mStopsActivity));
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
