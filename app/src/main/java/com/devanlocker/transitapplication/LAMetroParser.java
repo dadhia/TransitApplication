@@ -65,7 +65,7 @@ public class LAMetroParser {
     public static ArrayList<Stop> getStops(int routeNumber)
             throws ExecutionException, InterruptedException {
         HttpGetRequest getStopsRequest = new HttpGetRequest();
-        String requestString = GET_ROUTES + Integer.toString(routeNumber) + "/stops/";
+        String requestString = GET_ROUTES + Integer.toString(routeNumber) + "/sequence/";
         String stopsMessage = getStopsRequest.execute(requestString).get();
         JsonReader jsonReader = new JsonReader(new StringReader(stopsMessage));
         ArrayList<Stop> stops = parseStopsMessage(jsonReader);
