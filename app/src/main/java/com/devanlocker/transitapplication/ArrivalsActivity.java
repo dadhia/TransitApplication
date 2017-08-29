@@ -44,17 +44,7 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
     private RecyclerView.LayoutManager mLayoutManager;
     private double mLatitude, mLongitude;
     private int mRouteNumber;
-    //UNUSED MEMBER VARIABLES associated with commented out code at end of file
-    /*
-    privte FusedLocationProviderClient mFusedLocationClient;
-    private LocationRequest mLocationRequest;
-    private LocationCallback mLocationCallback;
-    private static final int REQUEST_CHECK_SETTINGS = 1;
-    private Location mLocation;
-    private static final String REQUESTING_LOCATION_UPDATES_KEY =
-            "com.devanlocker.TransitApplication.REQUESTING_LOCATION_UPDATES";
-    private boolean mRequestingLocationUpdates;
-    */
+    private String mAgencyName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +58,9 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
         mRouteNumber = intent.getIntExtra(StopsActivity.STOP_NUMBER_MESSAGE, 0);
         mLatitude = intent.getDoubleExtra(StopsActivity.LATITUDE_MESSAGE, 0.0);
         mLongitude = intent.getDoubleExtra(StopsActivity.LONGITUDE_MESSAGE, 0.0);
+        mAgencyName = intent.getStringExtra(StopsActivity.AGENCY_MESSAGE);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.single_stop_map);
-        mapFragment.getMapAsync(this);
+
 
         //create the scrolling list view to show all arrivals at this stop
         mRecyclerView = (RecyclerView) findViewById(R.id.arrivals_recycler_view);
@@ -79,7 +69,7 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         try {
-            ArrayList<Arrival> arrivals = LAMetroParser.getArrivals(mRouteNumber);
+            ArrayList<Arrival> arrivals = LAMetroParser.getArrivals(mRouteNumber, mAgencyName);
             mAdapter = new ArrivalAdapter(arrivals);
             mRecyclerView.setAdapter(mAdapter);
         } catch (InterruptedException e) {
@@ -91,6 +81,8 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
             //Some sort of error message here
             e.printStackTrace();
         }
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.single_stop_map);
+        mapFragment.getMapAsync(this);
 
     }
 

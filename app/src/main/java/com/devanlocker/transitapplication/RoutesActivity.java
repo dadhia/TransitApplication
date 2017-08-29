@@ -13,18 +13,29 @@ public class RoutesActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private String mAgencyName;
     public static final String ROUTE_NUMBER_MESSAGE = "com.devanlocker.transitapplication.routeNumber";
-
+    public static final String AGENCY_MESSAGE = "com.devanlocker.transitapplication.agency";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routes);
+
+        Intent intent = getIntent();
+        mAgencyName = intent.getStringExtra(ChooseAgency.AGENCY_MESSAGE);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.routes_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         try {
-            ArrayList<Route> routes = LAMetroParser.getRoutes();
+            ArrayList<Route> routes = null;
+            if (mAgencyName.equals("USC")) {
+                routes = USCParser.getRoutes();
+            } else {
+                routes = LAMetroParser.getRoutes(mAgencyName);
+            }
+
             mAdapter = new RouteAdapter(routes, this);
             mRecyclerView.setAdapter(mAdapter);
 
@@ -39,9 +50,10 @@ public class RoutesActivity extends AppCompatActivity {
         }
     }
 
-    public void switchToIndividualRoute(String number) {
+    public void switchToIndividualRoute(int number) {
         Intent intent = new Intent(this, StopsActivity.class);
         intent.putExtra(ROUTE_NUMBER_MESSAGE, number);
+        intent.putExtra(AGENCY_MESSAGE, mAgencyName);
         startActivity(intent);
     }
 }

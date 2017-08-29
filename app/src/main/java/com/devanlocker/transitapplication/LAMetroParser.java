@@ -8,13 +8,13 @@ import java.util.concurrent.ExecutionException;
 
 public class LAMetroParser {
 
-    private static final String GET_ROUTES = "http://api.metro.net/agencies/lametro/routes/";
-    private static final String STOPS = "http://api.metro.net/agencies/lametro/stops/";
+    private static final String GET_ROUTES = "http://api.metro.net/agencies/";
 
-    public static ArrayList<Route> getRoutes()
+    public static ArrayList<Route> getRoutes(String agencyName)
             throws ExecutionException, InterruptedException {
         HttpGetRequest getRoutesRequest = new HttpGetRequest();
-        String routesMessage = getRoutesRequest.execute(GET_ROUTES).get();
+        String requestString = GET_ROUTES + agencyName + "/routes/";
+        String routesMessage = getRoutesRequest.execute(requestString).get();
         JsonReader jsonReader = new JsonReader(new StringReader(routesMessage));
         ArrayList<Route> routes = LAMetroParser.parseRoutesMessage(jsonReader);
         return routes;
@@ -62,20 +62,20 @@ public class LAMetroParser {
         return new Route(number, description);
     }
 
-    public static ArrayList<Stop> getStops(int routeNumber)
+    public static ArrayList<Stop> getStops(int routeNumber, String agency)
             throws ExecutionException, InterruptedException {
         HttpGetRequest getStopsRequest = new HttpGetRequest();
-        String requestString = GET_ROUTES + Integer.toString(routeNumber) + "/stops/";
+        String requestString = GET_ROUTES + agency + "/routes/" + Integer.toString(routeNumber) + "/stops/";
         String stopsMessage = getStopsRequest.execute(requestString).get();
         JsonReader jsonReader = new JsonReader(new StringReader(stopsMessage));
         ArrayList<Stop> stops = parseStopsMessage(jsonReader);
         return stops;
     }
 
-    public static ArrayList<Stop> getStopsSequence(int routeNumber)
+    public static ArrayList<Stop> getStopsSequence(int routeNumber, String agency)
             throws ExecutionException, InterruptedException {
         HttpGetRequest getStopsSequenceRequest = new HttpGetRequest();
-        String requestString = GET_ROUTES + Integer.toString(routeNumber) + "/sequence/";
+        String requestString = GET_ROUTES + agency + "/routes/" + Integer.toString(routeNumber) + "/sequence/";
         String stopsMessage = getStopsSequenceRequest.execute(requestString).get();
         JsonReader jsonReader = new JsonReader(new StringReader(stopsMessage));
         ArrayList<Stop> stops = parseStopsMessage(jsonReader);
@@ -131,10 +131,10 @@ public class LAMetroParser {
         return new Stop(latitude, longitude, id, displayName);
     }
 
-    public static ArrayList<Arrival> getArrivals(int stopId)
+    public static ArrayList<Arrival> getArrivals(int stopId, String agency)
             throws ExecutionException, InterruptedException {
         HttpGetRequest getArrivalsRequest = new HttpGetRequest();
-        String requestString = STOPS + Integer.toString(stopId) + "/predictions/";
+        String requestString = GET_ROUTES + agency + "/stops/" + Integer.toString(stopId) + "/predictions/";
         String arrivalsMessage = getArrivalsRequest.execute(requestString).get();
         JsonReader jsonReader = new JsonReader(new StringReader(arrivalsMessage));
         ArrayList<Arrival> arrivals = parseArrivalsMessage(jsonReader);
