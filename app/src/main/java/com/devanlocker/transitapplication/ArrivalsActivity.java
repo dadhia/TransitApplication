@@ -29,6 +29,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,8 +65,7 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
 
         //Get the stop number, latitude, and longitude from intent
         Intent intent = getIntent();
-        mRouteNumber = new Integer(intent.getStringExtra(StopsActivity.STOP_NUMBER_MESSAGE));
-
+        mRouteNumber = intent.getIntExtra(StopsActivity.STOP_NUMBER_MESSAGE, 0);
         mLatitude = intent.getDoubleExtra(StopsActivity.LATITUDE_MESSAGE, 0.0);
         mLongitude = intent.getDoubleExtra(StopsActivity.LONGITUDE_MESSAGE, 0.0);
 
@@ -104,155 +104,8 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLatitude, mLongitude)));
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(18));
-        //TODO add user location
-        /**
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED
-                &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        googleMap.setMyLocationEnabled(true);
-         */
+        googleMap.getUiSettings().setZoomGesturesEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.setMapStyle(new MapStyleOptions(getResources().getString(R.string.map_style)));
     }
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mRequestingLocationUpdates) {
-            startLocationUpdates();
-        }
-    }
-    */
-
-    /*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        stopLocationUpdates();
-    }
-    */
-
-    /*
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY, mRequestingLocationUpdates);
-        super.onSaveInstanceState(outState);
-    }
-    */
-    /*
-    private void setupLocationRequest() {
-        mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(10000);
-        mLocationRequest.setFastestInterval(5000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-    }
-    */
-
-    /*
-    private void startLocationUpdates() {
-        mLocationCallback = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                for (Location location: locationResult.getLocations()) {
-                    //TODO update UI with locations
-                }
-            }
-        };
-        try {
-            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, null);
-        } catch (SecurityException e) {
-            //TODO do something here to handle the security exception
-        }
-    }
-    */
-
-    /*
-    private void stopLocationUpdates() {
-        mFusedLocationClient.removeLocationUpdates(mLocationCallback);
-    }
-    */
-
-    /*
-    private void updateValuesFromBundle(Bundle savedInstanceState) {
-        //update value of mRequestingLocationUpdates
-        if (savedInstanceState.keySet().contains(REQUESTING_LOCATION_UPDATES_KEY)) {
-            mRequestingLocationUpdates =
-                    savedInstanceState.getBoolean(REQUESTING_LOCATION_UPDATES_KEY);
-        }
-
-        //TODO update UI
-        //updateUI();
-    }
-    */
-    /*
-        //initialize mLocationRequest with the necessary parameters/values
-        setupLocationRequest();
-
-        //Create a LocationSettingsRequest and verify that we have access to these locations
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                .addLocationRequest(mLocationRequest);
-        SettingsClient client = LocationServices.getSettingsClient(this);
-        Task<LocationSettingsResponse> task = client.checkLocationSettings(builder.build());
-        task.addOnSuccessListener(this, new OnSuccessListener<LocationSettingsResponse>() {
-            @Override
-            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
-                //get location
-                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(
-                                                                            ArrivalsActivity.this);
-                startLocationUpdates();
-            }
-        });
-        task.addOnFailureListener(this, new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                int statusCode = ((ApiException) e).getStatusCode();
-                switch(statusCode) {
-                    case CommonStatusCodes.RESOLUTION_REQUIRED:
-                        //Location settings are not satisfactory, requires user intervention
-                        //use a dialog
-                        try {
-                            ResolvableApiException resolvable = (ResolvableApiException) e;
-                            resolvable.startResolutionForResult(ArrivalsActivity.this,
-                                    REQUEST_CHECK_SETTINGS);
-                            //TODO do we need to do something here?
-
-                        } catch (IntentSender.SendIntentException sendEx){
-                            //Ignore error.
-                            //TODO maybe add something here
-                        }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        //no way to fix location settings, don't show dialog
-                        break;
-                }
-            }
-        });
-        try {
-            if(mFusedLocationClient !=null) {
-                mFusedLocationClient.getLastLocation().
-                        addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                            @Override
-                            public void onSuccess(Location location) {
-                                //get last known location.  this may be null in rare cases
-                                if (location == null) {
-                                    //TODO
-                                    //Do something here
-                                }
-                            }
-                        });
-            }
-        } catch (SecurityException e) {
-            //TODO do something
-        }
-        */
-
 }

@@ -21,7 +21,7 @@ public class StopClickListener implements View.OnClickListener {
         TextView stopNumber = (TextView)v.findViewById(R.id.textViewStopNumber);
         //retrieve additional data that was associated with this text view
         LatLng location = (LatLng) v.getTag();
-        mStopsActivity.switchToStopArrivals(stopNumber.getText().toString(),
+        mStopsActivity.switchToStopArrivals(new Integer(stopNumber.getText().toString()),
                                             location);
     }
 }
