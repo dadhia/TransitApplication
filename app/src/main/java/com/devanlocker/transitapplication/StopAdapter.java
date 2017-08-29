@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 
 /**
@@ -19,9 +21,11 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView stopNumberTextView;
         public TextView stopNameTextView;
+        public View view;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            view = itemView;
             stopNumberTextView = (TextView) itemView.findViewById(R.id.textViewStopNumber);
             stopNameTextView = (TextView) itemView.findViewById(R.id.textViewStopName);
         }
@@ -46,16 +50,14 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, int position) {
         TextView number = holder.stopNumberTextView;
         TextView name = holder.stopNameTextView;
-        number.setText(new Integer(mDataSet.get(position).getId()).toString());
+        Stop stop = mDataSet.get(position);
+        number.setText(new Integer(stop.getId()).toString());
         name.setText(mDataSet.get(position).getName());
+        holder.view.setTag(new LatLng(stop.getLatitude(), stop.getLongitude()));
     }
 
     @Override
     public int getItemCount() {
         return mDataSet.size();
     }
-
-
-
-
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,11 @@
         </activity>
         <activity android:name=".StopsActivity" />
         <activity android:name=".ArrivalsActivity"></activity>
+        <meta-data android:name="com.google.android.geo.API_KEY"
+                   android:value="AIzaSyCcj3zCzQ0AaOJ3g8b2nkO5tMqd4FVU8Kk"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>

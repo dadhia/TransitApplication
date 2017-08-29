@@ -6,7 +6,7 @@ public class Stop {
     private int id;
     private String name;
 
-    public Stop (double longitude, double latitude, int id, String name) {
+    public Stop (double latitude, double longitude, int id, String name) {
         this.latitude = latitude;
         this.longitude = longitude;
         this.id = id;
