@@ -55,10 +55,10 @@ public class ArrivalsActivity extends AppCompatActivity implements OnMapReadyCal
 
         //Get the stop number, latitude, and longitude from intent
         Intent intent = getIntent();
-        mRouteNumber = intent.getIntExtra(StopsActivity.STOP_NUMBER_MESSAGE, 0);
-        mLatitude = intent.getDoubleExtra(StopsActivity.LATITUDE_MESSAGE, 0.0);
-        mLongitude = intent.getDoubleExtra(StopsActivity.LONGITUDE_MESSAGE, 0.0);
-        mAgencyName = intent.getStringExtra(StopsActivity.AGENCY_MESSAGE);
+        mRouteNumber = intent.getIntExtra(Constants.STOP_NUMBER_MESSAGE, 0);
+        mLatitude = intent.getDoubleExtra(Constants.LATITUDE_MESSAGE, 0.0);
+        mLongitude = intent.getDoubleExtra(Constants.LONGITUDE_MESSAGE, 0.0);
+        mAgencyName = intent.getStringExtra(Constants.AGENCY_MESSAGE);
 
 
 

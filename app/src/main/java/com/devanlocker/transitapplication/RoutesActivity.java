@@ -14,8 +14,7 @@ public class RoutesActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private String mAgencyName;
-    public static final String ROUTE_NUMBER_MESSAGE = "com.devanlocker.transitapplication.routeNumber";
-    public static final String AGENCY_MESSAGE = "com.devanlocker.transitapplication.agency";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,21 +38,26 @@ public class RoutesActivity extends AppCompatActivity {
             mAdapter = new RouteAdapter(routes, this);
             mRecyclerView.setAdapter(mAdapter);
 
-        } catch (InterruptedException e) {
-            //TODO
-            //Some sort of error message here
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            //TODO
-            //Some sort of error message here
+        } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
     }
 
-    public void switchToIndividualRoute(int number) {
-        Intent intent = new Intent(this, StopsActivity.class);
-        intent.putExtra(ROUTE_NUMBER_MESSAGE, number);
-        intent.putExtra(AGENCY_MESSAGE, mAgencyName);
+    /**
+     * Switches to either a StopsActivity or a StopsActivityNoMap.
+     * @param number int
+     */
+    public void switchToStopsActivity(int number) {
+        //Determine which kind of stops activity to switch to based on agency
+        Intent intent = null;
+        if (mAgencyName.equals("USC"))
+            intent = new Intent(this, StopsActivityNoMap.class);
+        else
+            intent = new Intent(this, StopsActivity.class);
+
+        //put extras and start
+        intent.putExtra(Constants.ROUTE_NUMBER_MESSAGE, number);
+        intent.putExtra(Constants.AGENCY_MESSAGE, mAgencyName);
         startActivity(intent);
     }
 }

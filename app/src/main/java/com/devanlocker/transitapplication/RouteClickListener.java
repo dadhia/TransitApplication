@@ -19,6 +19,6 @@ public class RouteClickListener implements View.OnClickListener {
     public void onClick(View v) {
         TextView routeNumber = (TextView)v.findViewById(R.id.textViewRouteNumber);
         int number = Integer.valueOf(routeNumber.getText().toString());
-        mRoutesActivity.switchToIndividualRoute(number);
+        mRoutesActivity.switchToStopsActivity(number);
     }
 }

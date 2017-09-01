@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
     private ArrayList<Stop> mDataSet;
-    private StopsActivity mStopsActivity;
+    private StopsActivityNoMap mStopsActivity;
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView stopNumberTextView;
@@ -31,7 +31,7 @@ public class StopAdapter extends RecyclerView.Adapter<StopAdapter.ViewHolder> {
         }
     }
 
-    public StopAdapter(ArrayList<Stop> stops, StopsActivity stopsActivity) {
+    public StopAdapter(ArrayList<Stop> stops, StopsActivityNoMap stopsActivity) {
         mDataSet = stops;
         mStopsActivity = stopsActivity;
     }

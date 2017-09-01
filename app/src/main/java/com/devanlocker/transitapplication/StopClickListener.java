@@ -10,9 +10,9 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class StopClickListener implements View.OnClickListener {
-    private StopsActivity mStopsActivity;
+    private StopsActivityNoMap mStopsActivity;
 
-    public StopClickListener(StopsActivity stopsActivity) {
+    public StopClickListener(StopsActivityNoMap stopsActivity) {
         mStopsActivity = stopsActivity;
     }
 

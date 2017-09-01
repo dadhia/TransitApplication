@@ -29,10 +29,7 @@ import java.util.concurrent.ExecutionException;
 
 public class StopsActivity extends AppCompatActivity
         implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-    public static final String STOP_NUMBER_MESSAGE = "com.devanlocker.transitapplication.stopNumber";
-    public static final String LATITUDE_MESSAGE = "com.devanlocker.transitapplication.latitude";
-    public static final String LONGITUDE_MESSAGE = "com.devanlocker.transitapplication.longitude";
-    public static final String AGENCY_MESSAGE = "com.devanlocker.transitapplication.agnecy";
+
     public static final int ACCESS_FINE_LOCATION_REQUEST_CODE = 1;
     private ArrayList<Stop> mStops;
     private int mRouteNumber;
@@ -46,12 +43,16 @@ public class StopsActivity extends AppCompatActivity
         setContentView(R.layout.activity_individual_route);
 
         Intent intent = getIntent();
-        mRouteNumber = intent.getIntExtra(RoutesActivity.ROUTE_NUMBER_MESSAGE, 0);
-        mAgencyName = intent.getStringExtra(RoutesActivity.AGENCY_MESSAGE);
+        mRouteNumber = intent.getIntExtra(Constants.ROUTE_NUMBER_MESSAGE, 0);
+        mAgencyName = intent.getStringExtra(Constants.AGENCY_MESSAGE);
         setUpToggleButtons();
 
         try {
-            mStops = LAMetroParser.getStops(mRouteNumber, mAgencyName);
+            if (mAgencyName.equals("USC")) {
+                mStops = USCParser.getStops(mRouteNumber);
+            } else {
+                mStops = LAMetroParser.getStops(mRouteNumber, mAgencyName);
+            }
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -86,10 +87,10 @@ public class StopsActivity extends AppCompatActivity
      */
     public void switchToStopArrivals(int stopNumber, LatLng location) {
         Intent intent = new Intent(this, ArrivalsActivity.class);
-        intent.putExtra(STOP_NUMBER_MESSAGE, stopNumber);
-        intent.putExtra(LATITUDE_MESSAGE, location.latitude);
-        intent.putExtra(LONGITUDE_MESSAGE, location.longitude);
-        intent.putExtra(AGENCY_MESSAGE, mAgencyName);
+        intent.putExtra(Constants.STOP_NUMBER_MESSAGE, stopNumber);
+        intent.putExtra(Constants.LATITUDE_MESSAGE, location.latitude);
+        intent.putExtra(Constants.LONGITUDE_MESSAGE, location.longitude);
+        intent.putExtra(Constants.AGENCY_MESSAGE, mAgencyName);
         startActivity(intent);
     }
 
@@ -125,7 +126,9 @@ public class StopsActivity extends AppCompatActivity
         //use mStops to draw a line that shows the route more clearly on the map
         //use a sequence request this time and replace the data in mStops which is no longer needed
         try {
-            mStops = LAMetroParser.getStopsSequence(mRouteNumber, mAgencyName);
+            if(!mAgencyName.equals("USC")) {
+                mStops = LAMetroParser.getStopsSequence(mRouteNumber, mAgencyName);
+            }
             PolylineOptions polylineOptions = new PolylineOptions();
             for (int i = 0; i < mStops.size(); i++) {
                 polylineOptions.add(new LatLng(mStops.get(i).getLatitude(),
