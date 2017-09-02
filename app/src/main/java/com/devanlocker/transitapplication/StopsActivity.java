@@ -14,7 +14,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
@@ -36,11 +36,12 @@ public class StopsActivity extends AppCompatActivity
     private GoogleMap mGoogleMap;
     private ArrayList<Marker> mMarkers;
     private String mAgencyName;
+    private MapView mMapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_individual_route);
+        setContentView(R.layout.activity_stops);
 
         Intent intent = getIntent();
         mRouteNumber = intent.getIntExtra(Constants.ROUTE_NUMBER_MESSAGE, 0);
@@ -56,8 +57,9 @@ public class StopsActivity extends AppCompatActivity
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
-        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.full_route_map);
-        mapFragment.getMapAsync(this);
+        mMapView = (MapView) findViewById(R.id.full_route_map);
+        mMapView.onCreate(savedInstanceState);
+        mMapView.getMapAsync(this);
     }
 
     private void setUpToggleButtons() {
@@ -68,7 +70,6 @@ public class StopsActivity extends AppCompatActivity
                 setStopsVisible(isChecked);
             }
         });
-        showStopsButton.setChecked(true);
 
         ToggleButton showTrafficButton = (ToggleButton) findViewById(R.id.showTrafficButton);
         showTrafficButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -77,7 +78,6 @@ public class StopsActivity extends AppCompatActivity
                 setTrafficVisible(isChecked);
             }
         });
-        showTrafficButton.setChecked(false);
     }
 
     /**
@@ -148,6 +148,7 @@ public class StopsActivity extends AppCompatActivity
         } else {
             addUserLocation();
         }
+        mMapView.onResume();
     }
 
     /**

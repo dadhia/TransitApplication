@@ -10,8 +10,8 @@
     <EditText
         android:id="@+id/arrivals_edit_text"
         style="@style/Widget.AppCompat.EditText"
-        android:layout_width="335dp"
-        android:layout_height="459dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -23,7 +23,6 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:inputType="textMultiLine"
-        android:singleLine="false"
         android:textColor="@color/blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.529"
